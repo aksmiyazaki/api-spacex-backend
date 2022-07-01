@@ -21,7 +21,7 @@ Stand up your favorite kind of database (and ideally it would be in a form that 
 
 ## The Task (Part 2):
 
-Write a script (in whatever language that you prefer, though Ruby, Python, or Javascript would be ideal for us) to import the relevant fields in starlink_historical_data.json as a time series. The relevant fields are:
+Write code (ideally in Python) to import the relevant fields in starlink_historical_data.json as a time series. The relevant fields are:
     - spaceTrack.creation_date (represents the time that the lat/lon records were recorded)
     - longitude
     - latitude
@@ -31,17 +31,13 @@ Don't hesitate to use any tools/tricks you know to load data quickly and easily!
 
 ## The Task (Part 3):
 
-Write a query to fetch the last known position of a satellite (by id), given a time T. Include this query in your README or somewhere in the project submission
+Write logic to fetch/query the last known position of a satellite (by id), given a time T. Include this query in your README or somewhere in the project submission
 
 ## Bonus Task (Part 4):
 
 Write some logic (via a combination of query + application logic, most likely) to fetch from the database the _closest_ satellite at a given time T, and a given a position on a globe as a (latitude, longitude) coordinate.
 
-No need to derive any fancy match for distances for a point on the globe to a position above the earth. You can just use the Haversine formula. Example libraries to help here:
-
-For Python: https://github.com/mapado/haversine
-
-For Ruby: https://github.com/kristianmandrup/haversine
+No need to derive any fancy match for distances for a point on the globe to a position above the earth. You can just use the Haversine formula. Example library to help here https://github.com/mapado/haversine
 
 ### How to Submit
 
