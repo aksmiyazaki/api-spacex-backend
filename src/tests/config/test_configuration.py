@@ -1,11 +1,11 @@
 import unittest
-from unittest.mock import patch, Mock
+from unittest.mock import patch
 
 import pytest
 from jsonschema.exceptions import ValidationError
 
 from config.configuration import Configuration
-from test.config import fixtures
+from tests import fixtures
 
 
 class TestConfiguration(unittest.TestCase):

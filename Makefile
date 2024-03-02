@@ -15,10 +15,10 @@ setup-dev: setup
 
 .PHONY: test
 test:
-	python -m pytest tests
+	python -m pytest
 
 .PHONY: test-coverage
 test-coverage:
-	coverage run -m pytest tests -source=.
-	coverage report --omit="*__init__.py","tests/*"
-	coverage html --omit="*__init__.py","tests/*" && open htmlcov/index.html
+	coverage run -m pytest src/tests -source=.
+	coverage report --omit="*__init__.py,tests/*,*/site-packages/*" -m
+	coverage html --omit="*__init__.py,tests/*,*/site-packages/*" && open htmlcov/index.html
