@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "loader_kind": {
+      "type": "string",
+      "enum": ["FILE"]
+    },
+    "log_level": {
+      "type": "string",
+      "enum": ["INFO", "DEBUG", "WARNING", "ERROR", "CRITICAL"],
+      "default": "INFO"
+    }
+  },
+  "required": ["loader_kind"]
+}
