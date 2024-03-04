@@ -1,0 +1,22 @@
+{
+  "loader_kind": "FILE",
+  "input": {
+    "input_file_path": "resources/inputs/historical_data_as_json_lines.json",
+    "input_file_schema_path": "resources/configs/data_schema.json"
+  },
+  "postgres_sink_database": {
+    "connection": {
+      "host": "postgres",
+      "database": "spacex",
+      "user": "postgres",
+      "password": "mysecretpassword",
+      "port": 5432
+    },
+    "batch_size": 300,
+    "insertion_sql" : "INSERT INTO satellite(satellite_id, latitude, longitude, creation_date) values (%s, %s, %s, %s)"
+  },
+  "object_to_list_transformation_mapping":[
+    {"json_object_name": "id", "query_column_name": "satellite_id"},
+    {"json_object_name": "spaceTrack.CREATION_DATE", "query_column_name":  "creation_date"}
+  ]
+}

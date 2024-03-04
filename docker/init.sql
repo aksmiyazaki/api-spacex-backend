@@ -1,0 +1,9 @@
+CREATE DATABASE spacex;
+USE spacex;
+CREATE TABLE satellite (
+    id SERIAL PRIMARY KEY,
+    creation_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    latitude DOUBLE PRECISION,
+    longitude DOUBLE PRECISION,
+    satellite_id VARCHAR(255) NOT NULL
+);

@@ -2,15 +2,105 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
   "properties": {
+    "input": {
+      "type": "object",
+      "properties": {
+        "input_file_path": {
+          "type": "string"
+        },
+        "input_file_schema_path": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "input_file_path",
+        "input_file_schema_path"
+      ]
+    },
     "loader_kind": {
       "type": "string",
-      "enum": ["FILE"]
+      "enum": [
+        "FILE"
+      ]
     },
-    "log_level": {
-      "type": "string",
-      "enum": ["INFO", "DEBUG", "WARNING", "ERROR", "CRITICAL"],
-      "default": "INFO"
+    "postgres_sink_database": {
+      "type": "object",
+      "properties": {
+        "connection": {
+          "type": "object",
+          "properties" : {
+            "host": {
+              "type": "string"
+            },
+            "database": {
+              "type": "string"
+            },
+            "user": {
+              "type": "string"
+            },
+            "password": {
+              "type": "string"
+            },
+            "port": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "host",
+            "database",
+            "user",
+            "password",
+            "port"
+          ]
+        },
+        "batch_size": {
+          "type": "integer"
+        },
+        "insertion_sql": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "connection",
+        "batch_size",
+        "insertion_sql"
+      ]
     }
   },
-  "required": ["loader_kind"]
+  "object_to_list_transformation_mapping": {
+    "type": "array",
+    "items": {
+      "type": "object",
+      "properties": {
+        "json_object_name": {
+          "type": "string"
+        },
+        "query_column_name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "query_name"
+      ]
+    }
+  },
+  "string_to_timestamp_transformation": {
+    "type": "object",
+    "properties": {
+      "fields_to_convert": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "timestamp_format": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "required": [
+    "loader_kind",
+    "input",
+    "object_to_list_transformation_mapping"
+  ]
 }

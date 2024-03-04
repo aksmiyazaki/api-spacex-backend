@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "id": {"type":  ["string", "null"] },
+    "latitude": {"type":  ["number", "null"] },
+    "longitude": {"type":  ["number", "null"] },
+    "spaceTrack":
+      {
+        "type":  "object",
+        "properties": {
+          "CREATION_DATE": {"type": "string"}
+        },
+        "required": ["CREATION_DATE"]
+      }
+  },
+  "required": ["id","latitude","spaceTrack"]
+}

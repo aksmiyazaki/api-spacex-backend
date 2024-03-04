@@ -24,7 +24,7 @@ class FileLoaderTest(unittest.TestCase):
 
         open_patch.assert_has_calls([call(self.__expected_file_path, "r"),
                                      call(self.__expected_schema_path, "r")])
-        assert loader.schema_keys == ["id", "value"]
+        assert loader.schema_keys == ["id", "value", "nested.first_nested", "nested.second_nested.third_nested"]
 
 
 
@@ -54,6 +54,20 @@ class FileLoaderTest(unittest.TestCase):
         res = file_loader.load_object_based_on_schema()
 
         assert res is None
+
+    @patch("loader.file.open")
+    def test_should_load_object_when_input_is_nested_json(self, open_patch):
+        open_patch.side_effect = [io.StringIO(fixtures.pristine_set_of_nested_objects),
+                                  io.StringIO(json.dumps(fixtures.object_schema))]
+        file_mock_object = Mock()
+        file_mock_object.readline.return_value = json.dumps(fixtures.correct_json)
+        open_patch.return_value = file_mock_object
+
+        file_loader = self.initialize_file_loader()
+        res = file_loader.load_object_based_on_schema()
+
+        assert res["id"] == "abc123"
+        assert res["value"] == 42
 
 
 if __name__ == '__main__':
