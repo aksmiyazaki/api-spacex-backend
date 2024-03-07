@@ -1,4 +1,5 @@
 import json
+from logging import INFO, DEBUG
 
 from jsonschema.validators import validate
 
@@ -12,9 +13,9 @@ class FileLoader:
         self.__logger = logger
         self.schema_keys = []
 
-    def __log_if_set(self, msg, level="INFO"):
+    def __log_if_set(self, msg, level=INFO):
         if self.__logger:
-            self.__logger.log(msg, level)
+            self.__logger.log(level, msg)
 
     def initialize_loader(self):
         self.__file = open(self.__input_file_path, "r")
@@ -42,7 +43,7 @@ class FileLoader:
         if line:
             loaded_json = json.loads(line.strip())
             validate(instance=loaded_json, schema=self.__schema_file)
-            self.__log_if_set(f"Object Loaded: {loaded_json}", "DEBUG")
+            self.__log_if_set(f"Object Loaded: {loaded_json}", DEBUG)
             return self.__filter_schema_fields(loaded_json)
         else:
             return None

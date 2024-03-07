@@ -1,4 +1,5 @@
 import re
+from logging import DEBUG, INFO
 
 import psycopg2
 
@@ -16,9 +17,9 @@ class PostgresSink:
         self.__clear_after_commit = clear_after_commit
         self.__logger = logger
 
-    def __log_if_set(self, msg, level="INFO"):
+    def __log_if_set(self, msg, level=INFO):
         if self.__logger:
-            self.__logger.log(msg, level)
+            self.__logger.log(level, msg)
 
     @property
     def amount_of_queued_objects(self):
@@ -26,7 +27,7 @@ class PostgresSink:
 
     def insert_object(self, loaded_object, force_commit=False):
         self.__objects_to_insert.append(loaded_object)
-        self.__log_if_set(f"Inserted Object {loaded_object}", "DEBUG")
+        self.__log_if_set(f"Inserted Object {loaded_object}", DEBUG)
 
         if force_commit or len(self.__objects_to_insert) == self.__batch_size:
             self.commit_changes()

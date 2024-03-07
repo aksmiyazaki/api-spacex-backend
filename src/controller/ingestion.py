@@ -1,3 +1,6 @@
+from logging import INFO
+
+
 class IngestionController:
     def __init__(self, loader, sink, transformations, logger=None):
         self.__loader = loader
@@ -5,9 +8,9 @@ class IngestionController:
         self.__transformations = transformations
         self.__logger = logger
 
-    def __log_if_set(self, msg, level="INFO"):
+    def __log_if_set(self, msg, level=INFO):
         if self.__logger:
-            self.__logger.log(msg, level)
+            self.__logger.log(level, msg)
 
     def ingest(self):
         loaded_object = self.__loader.load_object_based_on_schema()
