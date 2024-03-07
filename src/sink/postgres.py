@@ -16,19 +16,23 @@ class PostgresSink:
         self.__clear_after_commit = clear_after_commit
         self.__logger = logger
 
+    def __log_if_set(self, msg, level="INFO"):
+        if self.__logger:
+            self.__logger.log(msg, level)
+
     @property
     def amount_of_queued_objects(self):
         return len(self.__objects_to_insert)
 
     def insert_object(self, loaded_object, force_commit=False):
         self.__objects_to_insert.append(loaded_object)
-        self.__logger.debug(f"Inserted Object {loaded_object}")
+        self.__log_if_set(f"Inserted Object {loaded_object}", "DEBUG")
 
         if force_commit or len(self.__objects_to_insert) == self.__batch_size:
             self.commit_changes()
 
     def commit_changes(self):
-        self.__logger.info(f"Commiting changes")
+        self.__log_if_set(f"Commiting changes")
         if len(self.__objects_to_insert) > 0:
             self.__persist_on_data_store()
         if self.__clear_after_commit:

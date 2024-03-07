@@ -12,11 +12,15 @@ class FileLoader:
         self.__logger = logger
         self.schema_keys = []
 
+    def __log_if_set(self, msg, level="INFO"):
+        if self.__logger:
+            self.__logger.log(msg, level)
+
     def initialize_loader(self):
         self.__file = open(self.__input_file_path, "r")
         self.__schema_file = json.load(open(self.__json_schema_path, "r"))
         self.schema_keys = self.__extract_schema_keys(self.__schema_file)
-        self.__logger.info("FileLoader Initialized")
+        self.__log_if_set("FileLoader Initialized")
 
     def __extract_schema_keys(self, schema):
         items = schema["properties"]
@@ -38,8 +42,7 @@ class FileLoader:
         if line:
             loaded_json = json.loads(line.strip())
             validate(instance=loaded_json, schema=self.__schema_file)
-            self.__logger.debug(f"Object Loaded: {loaded_json}")
-
+            self.__log_if_set(f"Object Loaded: {loaded_json}", "DEBUG")
             return self.__filter_schema_fields(loaded_json)
         else:
             return None
